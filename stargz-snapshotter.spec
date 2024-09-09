@@ -15,6 +15,7 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 # os_git_vars needed to run hack scripts during rpm builds
 %{!?os_git_vars: %global os_git_vars OS_GIT_VERSION='' OS_GIT_COMMIT='' OS_GIT_MAJOR='' OS_GIT_MINOR='' OS_GIT_TREE_STATE='' }
+#%{!?os_git_vars: %global os_git_vars OS_GIT_VERSION='4.18.0-202409020842.p0.g28e4ebc.assembly.test-28e4ebc' OS_GIT_COMMIT='28e4ebc2271d444a86f5d10a0ab967b2c05aa313' OS_GIT_MAJOR='4' OS_GIT_MINOR='18' OS_GIT_PATCH=0 OS_GIT_TREE_STATE='' }
 
 %if 0%{?skip_build}
 %global do_build 0
@@ -117,7 +118,7 @@ install -d %{buildroot}%{_bindir}
 for bin in containerd-stargz-grpc ctr-remote stargz-store
 do
   echo "+++ INSTALLING ${bin}"
-  install -p -m 755 %{_builddir}/bin/${bin} %{buildroot}%{_bindir}/${bin}
+  install -p -m 755 $PWD/out/${bin} %{buildroot}%{_bindir}/${bin}
 done
 
 # EXAMPLE: Install tests
@@ -143,5 +144,5 @@ done
 %pre
 
 %changelog
-* Tue Jul 30 2024 Sai Ramesh Vanka <svanka@redhat.com> 0.0.1
+* Wed Sep 9 2024 Sai Ramesh Vanka <svanka@redhat.com> 0.0.1
 - First version of the spec file.
